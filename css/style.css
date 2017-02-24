@@ -1,0 +1,128 @@
+.byviewer {
+  z-index: 20170;
+  display: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+.byviewer .byviewer-mask {
+  width: 100%;
+  height: 100%;
+  z-index: 1990;
+  background: #000;
+  opacity: .95;
+}
+.byviewer .byviewer-close {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  color: #fff;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background: red;
+  cursor: pointer;
+}
+.byviewer .byviewer-close span {
+  font-size: 30px!important;
+}
+.byviewer .byviewer-imgbox {
+  width: 100%;
+  height: 100%;
+}
+.byviewer .byviewer-imgbox img {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  transform: rotate(0deg);
+  transition: .5s;
+  display: none;
+}
+.byviewer .byviewer-imgbox img:first-child {
+  display: block;
+}
+.byviewer .byviewer-prev,
+.byviewer .byviewer-next {
+  height: 100px;
+  line-height: 100px;
+  padding: 0 10px;
+  background: #000;
+  color: #fff;
+  position: absolute;
+  top: 50%;
+  margin-top: -50px;
+  cursor: pointer;
+  transition: .2s;
+}
+.byviewer .byviewer-prev:hover,
+.byviewer .byviewer-next:hover {
+  padding: 0 15px;
+  transition: .2s;
+}
+.byviewer .byviewer-prev:hover span,
+.byviewer .byviewer-next:hover span {
+  font-size: 20px;
+}
+.byviewer .byviewer-prev {
+  left: 0;
+}
+.byviewer .byviewer-next {
+  right: 0;
+}
+.byviewer .byviewer-info {
+  position: absolute;
+  bottom: 70px;
+  left: 0;
+  color: #fff;
+}
+.byviewer .byviewer-info p {
+  margin: 5px 20px;
+}
+.byviewer .byviewer-info:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: .2;
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.byviewer .byviewer-toolbar {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+.byviewer .byviewer-toolbar:before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: .2;
+  background: #000;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.byviewer .byviewer-toolbar > div {
+  display: inline-block;
+  line-height: 50px;
+  padding: 0 20px;
+  background: #198aff;
+  color: #fff;
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  margin: 10px 0;
+}
+.byviewer .byviewer-toolbar > div span {
+  font-size: 20px;
+}

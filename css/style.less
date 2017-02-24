@@ -1,0 +1,136 @@
+
+.byviewer {
+    z-index: 20170;
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top:0;
+    left: 0;
+    .byviewer-mask {
+        width: 100%;
+        height: 100%;
+        z-index: 1990;
+        background: #000;
+        opacity: .95;
+    }
+    .byviewer-close {
+        width: 50px;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+        color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+        background: red;
+        cursor: pointer;
+        span{
+            font-size: 30px!important;
+        }
+    }
+    .byviewer-imgbox {
+        width: 100%;
+        height: 100%;
+        img {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+            transform: rotate(0deg);
+            transition: .5s;
+            display: none;
+            &:first-child{
+                display: block;
+            }
+        
+        }
+    }
+    .byviewer-prev, .byviewer-next {
+        height: 100px;
+        line-height: 100px;
+        padding: 0 10px;
+        background: #000;
+        color: #fff;
+        position: absolute;
+        top: 50%;
+        margin-top: -50px;
+        cursor: pointer;
+        transition: .2s;
+        &:hover{
+           
+            padding: 0 15px;  
+            transition: .2s;
+            span{
+              font-size: 20px;
+            }
+
+        }
+    }
+    .byviewer-prev {
+        left: 0;
+    }
+    .byviewer-next {
+        right: 0;
+    }
+    .byviewer-info{
+        position: absolute;
+        bottom: 70px;
+        left: 0;
+        color: #fff;
+        p{
+          margin: 5px 20px;
+        }
+     
+         &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            opacity: .2;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        
+        
+    }
+    .byviewer-toolbar {
+        position: absolute;
+        bottom: 0;
+        width: 100%;
+      
+        text-align: center;
+        &:before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 100%;
+            opacity: .2;
+            background: #000;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+        >div {
+            display: inline-block;
+            line-height: 50px;
+            padding: 0 20px;
+            background: #198aff;
+            color: #fff;
+            cursor: pointer;
+            position: relative;
+            z-index: 2;
+            margin: 10px 0;
+           
+            span{
+                 font-size: 20px;
+
+            }
+            
+        }
+    }
+}
