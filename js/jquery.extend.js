@@ -70,7 +70,7 @@ $.fn.extend({
                             }
                         }
                     }
-                        //图片非水平
+                    //图片非水平
                     else {
 
                         imgScale = imgHeight / imgWidth;
@@ -180,6 +180,46 @@ $.fn.extend({
             });
 
             //拖动-----待完善
+            var startDrag = false;
+            var startX, startY;
+            var $dragobj;
+
+
+
+            $imgArry.mousedown(function (e) {
+                $(this).css("cursor", "move");
+                $dragobj=$(this);
+                startDrag = true;
+                startX = e.pageX;
+                startY = e.pageY;
+                console.info("mousedown")
+
+            });
+            $win.mousemove(function (e) {
+                if (!startDrag) {
+                    return;
+                }
+                 console.info("   mousemove  ")
+                var diffX = e.pageX - startX;
+                var diffY = e.pageY - startY;
+           
+                $dragobj.css({
+                    "top": $dragobj.position().top +=1,// diffY + "px",
+                    "left": $dragobj.position().left +=1// diffX + "px",
+                });
+ 
+                startX = e.pageX;
+                startY = e.pageY;
+
+            });
+            $win.mouseup(function () {
+                $imgArry.css("cursor", "auto");
+                startDrag = false;
+                console.info("mouseup")
+            });
+
+
+
 
             //重置变换
             $win.find(".byviewer-reset").click(function () {
@@ -231,5 +271,5 @@ $.fn.extend({
 
         })
     },
-  
+
 })
