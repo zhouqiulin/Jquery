@@ -195,9 +195,7 @@ $.fn.extend({
                 startX = e.pageX;
                 startY = e.pageY;
 
-            });
-
-            $imgArry.mousemove(function(e) {
+            }).mousemove(function(e) {
 
                 if (startDrag) {
                     var diffX = e.pageX - startX;
@@ -218,40 +216,6 @@ $.fn.extend({
                 startDrag = false;
                 $dragobj && $dragobj.css("cursor", "auto");
 
-            });
-
-
-
-            $imgArry.mousedown(function(e) {
-                $(this).css("cursor", "move");
-                $dragobj = $(this);
-                startDrag = true;
-                startX = e.pageX;
-                startY = e.pageY;
-                console.info("mousedown");
-
-            });
-            $win.mousemove(function(e) {
-                if (!startDrag) {
-                    return;
-                }
-                console.info("   mousemove  ");
-                var diffX = e.pageX - startX;
-                var diffY = e.pageY - startY;
-
-                $dragobj.css({
-                    "top": $dragobj.position().top += diffX, // diffY + "px",
-                    "left": $dragobj.position().left += diffY // diffX + "px",
-                });
-
-                startX = e.pageX;
-                startY = e.pageY;
-
-            });
-            $win.mouseup(function() {
-                $imgArry.css("cursor", "auto");
-                startDrag = false;
-                console.info("mouseup");
             });
 
             //重置变换
