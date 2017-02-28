@@ -28,6 +28,7 @@
 }
 .byviewer .byviewer-close span {
   font-size: 30px!important;
+  vertical-align: -5px;
 }
 .byviewer .byviewer-imgbox {
   width: 100%;
@@ -37,7 +38,7 @@
   position: absolute;
   margin: auto;
   transform: rotate(0deg);
-  transition: .5s;
+  transition: transform .5s;
   display: none;
 }
 .byviewer .byviewer-imgbox img:first-child {

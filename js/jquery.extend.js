@@ -1,7 +1,13 @@
 $.fn.extend({
-    byviewer: function (option) {
+    byviewer: function(option) {
 
-        $(this).each(function (index, ele) {
+        $(this).each(function(index, ele) {
+
+            var defaultOption = {
+                hookbtn: "" //激活按钮
+            };
+
+            option = $.extend(defaultOption, option);
 
             //创建弹出层；
             var $win = $('<div class="byviewer" ><div class="byviewer-mask"></div> <div class="byviewer-imgbox">  </div> <div class="byviewer-close"><span class="fa fa-times "></span></div> <div class="byviewer-prev"><span class="fa fa-chevron-left"></span></div> <div class="byviewer-next"><span class="fa fa-chevron-right"></span></div><div class="byviewer-info"></div> <div class="byviewer-toolbar"> <div class="byviewer-addrotate"><span class="fa fa-rotate-right"></span></div> <div class="byviewer-reducerotate"><span class="fa fa-rotate-left"></span></div> <div class="byviewer-addscale"><span class="fa fa-search-plus"></span></span></div> <div class="byviewer-reducescale"><span class="fa fa-search-minus"></span></div> <div class="byviewer-reset"><span class="fa fa-refresh"></span></div> </div> </div> ');
@@ -14,33 +20,33 @@ $.fn.extend({
 
             var $imgArry = $win.find("img");
             var infoArry = [];
-            $imgArry.each(function (a, b) {
-                var info = $(b).data("info")
+            $imgArry.each(function(a, b) {
+                var info = $(b).data("info");
                 if (info) {
                     infoArry.push(info);
                 }
-            })
+            });
 
 
             var imgSize = $imgArry.size();
             var curIndex = 0;
 
             var winWidth, winHeight, winScale;
-            var startDrag = false; //暂时没用到
+
 
             function resizeImg($obj, opposite) {
                 winWidth = $(window).width();
                 winHeight = $(window).height();
 
                 winScale = winWidth / winHeight;
-                $obj.each(function (imgindex, imgele) {
+                $obj.each(function(imgindex, imgele) {
                     var imgWidth = $(imgele).attr("data-prewidth") || $(imgele).width();
                     var imgHeight = $(imgele).attr("data-preheight") || $(imgele).height();
 
 
 
-                    $(imgele).attr("data-prewidth", imgWidth)
-                    $(imgele).attr("data-preheight", imgHeight)
+                    $(imgele).attr("data-prewidth", imgWidth);
+                    $(imgele).attr("data-preheight", imgHeight);
 
                     $(imgele).css({
                         top: "50%",
@@ -53,20 +59,20 @@ $.fn.extend({
                         imgScale = imgWidth / imgHeight;
                         if (imgWidth > winWidth || imgHeight > winHeight) {
                             if (imgScale > winScale) {
-                                $(imgele).width(winWidth)
+                                $(imgele).width(winWidth);
                                 $(imgele).css({
                                     "height": "",
                                     "marginLeft": winWidth / (-2) + "px",
                                     "marginTop": $(imgele).height() / -2 + "px"
 
-                                })
+                                });
                             } else if (imgScale < winScale) {
                                 $(imgele).height(winHeight);
                                 $(imgele).css({
                                     "width": "",
                                     "marginLeft": $(imgele).width() / -2 + "px",
                                     "marginTop": winHeight / -2 + "px"
-                                })
+                                });
                             }
                         }
                     }
@@ -78,12 +84,12 @@ $.fn.extend({
                             if (imgScale > winScale) {
 
                                 $(imgele).height(winWidth);
-                                $(imgele).css("width", "")
+                                $(imgele).css("width", "");
 
 
                             } else if (imgScale < winScale) {
                                 $(imgele).width(winHeight);
-                                $(imgele).css("height", "")
+                                $(imgele).css("height", "");
                             }
                         }
 
@@ -109,10 +115,10 @@ $.fn.extend({
                 }
                 rotate += 90 * direction;
                 //  rotate=rotate%360;
-                $obj.css("transform", "rotate(" + rotate + "deg)")
-                $obj.attr("data-rotate", rotate)
+                $obj.css("transform", "rotate(" + rotate + "deg)");
+                $obj.attr("data-rotate", rotate);
 
-                if (rotate % 180 == 0) {
+                if (rotate % 180 === 0) {
                     resizeImg($obj, false);
                 } else {
                     resizeImg($obj, true);
@@ -126,7 +132,7 @@ $.fn.extend({
                 } else {
                     zoom = parseFloat($obj.attr("data-zoom"));
                 }
-                if (direction == 1) {
+                if (direction === 1) {
                     zoom *= 1.5;
                 } else {
                     zoom /= 1.5;
@@ -134,17 +140,17 @@ $.fn.extend({
 
                 var rotate = $obj.attr("data-rotate") || 0;
 
-                $obj.css("transform", "scale(" + zoom + ") rotate(" + rotate + "deg)")
-                $obj.attr("data-zoom", zoom)
+                $obj.css("transform", "scale(" + zoom + ") rotate(" + rotate + "deg)");
+                $obj.attr("data-zoom", zoom);
             }
 
             function setInfo(index) {
-                var html = ""
+                var html = "";
                 if (index < infoArry.length) {
                     var obj = infoArry[index];
                     for (var i in obj) {
                         if (obj.hasOwnProperty(i)) {
-                            html += '<p>' + i + ':' + obj[i] + '</p>'
+                            html += '<p>' + i + ':' + obj[i] + '</p>';
                         }
                     }
 
@@ -158,7 +164,7 @@ $.fn.extend({
             }
 
             //旋转
-            $win.find(".byviewer-addrotate,.byviewer-reducerotate").click(function () {
+            $win.find(".byviewer-addrotate,.byviewer-reducerotate").click(function() {
 
                 var direction = 1;
                 if ($(this).hasClass("byviewer-reducerotate")) {
@@ -169,7 +175,7 @@ $.fn.extend({
             });
 
             //缩放
-            $win.find(".byviewer-addscale,.byviewer-reducescale").click(function () {
+            $win.find(".byviewer-addscale,.byviewer-reducescale").click(function() {
 
                 var direction = 1;
                 if ($(this).hasClass("byviewer-reducescale")) {
@@ -183,66 +189,93 @@ $.fn.extend({
             var startDrag = false;
             var startX, startY;
             var $dragobj;
+            $imgArry.mousedown(function(e) {
+                startDrag = true;
+                $dragobj = $(this).css("cursor", "move");
+                startX = e.pageX;
+                startY = e.pageY;
+
+            });
+
+            $imgArry.mousemove(function(e) {
+
+                if (startDrag) {
+                    var diffX = e.pageX - startX;
+                    var diffY = e.pageY - startY;
+
+                    $dragobj.css({
+                        top: $dragobj.position().top + diffY + "px",
+                        left: $dragobj.position().left + diffX + "px",
+
+                    });
+                    startX = e.pageX;
+                    startY = e.pageY;
+                }
+                return false;
+
+
+            }).mouseup(function() {
+                startDrag = false;
+                $dragobj && $dragobj.css("cursor", "auto");
+
+            });
 
 
 
-            $imgArry.mousedown(function (e) {
+            $imgArry.mousedown(function(e) {
                 $(this).css("cursor", "move");
-                $dragobj=$(this);
+                $dragobj = $(this);
                 startDrag = true;
                 startX = e.pageX;
                 startY = e.pageY;
-                console.info("mousedown")
+                console.info("mousedown");
 
             });
-            $win.mousemove(function (e) {
+            $win.mousemove(function(e) {
                 if (!startDrag) {
                     return;
                 }
-                 console.info("   mousemove  ")
+                console.info("   mousemove  ");
                 var diffX = e.pageX - startX;
                 var diffY = e.pageY - startY;
-           
+
                 $dragobj.css({
-                    "top": $dragobj.position().top +=1,// diffY + "px",
-                    "left": $dragobj.position().left +=1// diffX + "px",
+                    "top": $dragobj.position().top += diffX, // diffY + "px",
+                    "left": $dragobj.position().left += diffY // diffX + "px",
                 });
- 
+
                 startX = e.pageX;
                 startY = e.pageY;
 
             });
-            $win.mouseup(function () {
+            $win.mouseup(function() {
                 $imgArry.css("cursor", "auto");
                 startDrag = false;
-                console.info("mouseup")
+                console.info("mouseup");
             });
 
-
-
-
             //重置变换
-            $win.find(".byviewer-reset").click(function () {
+            $win.find(".byviewer-reset").click(function() {
 
                 $imgArry.css("transform", "");
                 $imgArry.removeAttr("data-rotate");
-                $imgArry.removeAttr("data-zoom")
+                $imgArry.removeAttr("data-zoom");
                 resizeImg($imgArry, false);
             });
 
             //切换
-            $win.find(".byviewer-prev,.byviewer-next").click(function () {
+            $win.find(".byviewer-prev,.byviewer-next").click(function() {
                 var direction = $(this).hasClass("byviewer-prev") ? -1 : 1;
                 curIndex = curIndex + direction;
                 curIndex = curIndex < 0 ? imgSize - 1 : curIndex;
-                curIndex = curIndex == imgSize ? 0 : curIndex;
+                curIndex = curIndex === imgSize ? 0 : curIndex;
                 $imgArry.eq(curIndex).show().siblings().hide();
                 setInfo(curIndex);
 
             });
 
             //图片激活
-            $(ele).find("li").click(function () {
+            $(ele).find("li").click(function() {
                 curIndex = $(this).index();
                 $imgArry.eq(curIndex).show().siblings().hide();
                 setInfo(curIndex);
@@ -250,26 +283,19 @@ $.fn.extend({
                 resizeImg($imgArry, false);
             });
 
-
             //按钮激活
             if (option.hookbtn) {
-                $(option.hookbtn).click(function () {
+                $(option.hookbtn).click(function() {
                     $(ele).find("li").eq(0).click();
                 });
 
             }
 
             //关闭
-            $win.find(".byviewer-close").click(function () {
+            $win.find(".byviewer-close").click(function() {
                 $win.hide();
             });
-
-
-
-
-
-
-        })
+        });
     },
 
-})
+});
