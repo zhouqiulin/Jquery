@@ -1,7 +1,7 @@
 $.fn.extend({
-    byviewer: function(option) {
+    byviewer: function (option) {
 
-        $(this).each(function(index, ele) {
+        $(this).each(function (index, ele) {
 
             var defaultOption = {
                 hookbtn: "" //激活按钮
@@ -20,7 +20,7 @@ $.fn.extend({
 
             var $imgArry = $win.find("img");
             var infoArry = [];
-            $imgArry.each(function(a, b) {
+            $imgArry.each(function (a, b) {
                 var info = $(b).data("info");
                 if (info) {
                     infoArry.push(info);
@@ -39,7 +39,7 @@ $.fn.extend({
                 winHeight = $(window).height();
 
                 winScale = winWidth / winHeight;
-                $obj.each(function(imgindex, imgele) {
+                $obj.each(function (imgindex, imgele) {
                     var imgWidth = $(imgele).attr("data-prewidth") || $(imgele).width();
                     var imgHeight = $(imgele).attr("data-preheight") || $(imgele).height();
 
@@ -97,8 +97,8 @@ $.fn.extend({
 
                     //居中设置
                     $(imgele).css({
-                        "top": "50%",
-                        "left": "50%",
+                        "top": winHeight/2+"px",
+                        "left": winWidth/2+"px",
                         "marginLeft": $(imgele).width() / -2 + "px",
                         "marginTop": $(imgele).height() / -2 + "px"
                     });
@@ -164,7 +164,7 @@ $.fn.extend({
             }
 
             //旋转
-            $win.find(".byviewer-addrotate,.byviewer-reducerotate").click(function() {
+            $win.find(".byviewer-addrotate,.byviewer-reducerotate").click(function () {
 
                 var direction = 1;
                 if ($(this).hasClass("byviewer-reducerotate")) {
@@ -175,7 +175,7 @@ $.fn.extend({
             });
 
             //缩放
-            $win.find(".byviewer-addscale,.byviewer-reducescale").click(function() {
+            $win.find(".byviewer-addscale,.byviewer-reducescale").click(function () {
 
                 var direction = 1;
                 if ($(this).hasClass("byviewer-reducescale")) {
@@ -183,27 +183,29 @@ $.fn.extend({
                 }
                 var cur = $imgArry.eq(curIndex);
                 zoomImg(cur, direction);
+                
             });
 
             //拖动-----待完善
             var startDrag = false;
             var startX, startY;
             var $dragobj;
-            $imgArry.mousedown(function(e) {
+            $imgArry.mousedown(function (e) {
                 startDrag = true;
                 $dragobj = $(this).css("cursor", "move");
                 startX = e.pageX;
                 startY = e.pageY;
 
-            }).mousemove(function(e) {
-
+            }).mousemove(function (e) {
                 if (startDrag) {
                     var diffX = e.pageX - startX;
                     var diffY = e.pageY - startY;
+                    // console.log("diffx:"+diffX+" diffy"+diffY);
+                    // console.log($dragobj.position());
 
                     $dragobj.css({
-                        top: $dragobj.position().top + diffY + "px",
-                        left: $dragobj.position().left + diffX + "px",
+                        top: parseFloat($dragobj.css("top")) + diffY + "px",
+                        left: parseFloat($dragobj.css("left")) + diffX + "px",
 
                     });
                     startX = e.pageX;
@@ -212,14 +214,14 @@ $.fn.extend({
                 return false;
 
 
-            }).mouseup(function() {
+            }).on("mouseup mouseleave", function () {
+                // console.log("cancelDrag")
                 startDrag = false;
                 $dragobj && $dragobj.css("cursor", "auto");
-
             });
 
             //重置变换
-            $win.find(".byviewer-reset").click(function() {
+            $win.find(".byviewer-reset").click(function () {
 
                 $imgArry.css("transform", "");
                 $imgArry.removeAttr("data-rotate");
@@ -228,7 +230,7 @@ $.fn.extend({
             });
 
             //切换
-            $win.find(".byviewer-prev,.byviewer-next").click(function() {
+            $win.find(".byviewer-prev,.byviewer-next").click(function () {
                 var direction = $(this).hasClass("byviewer-prev") ? -1 : 1;
                 curIndex = curIndex + direction;
                 curIndex = curIndex < 0 ? imgSize - 1 : curIndex;
@@ -239,7 +241,7 @@ $.fn.extend({
             });
 
             //图片激活
-            $(ele).find("li").click(function() {
+            $(ele).find("li").click(function () {
                 curIndex = $(this).index();
                 $imgArry.eq(curIndex).show().siblings().hide();
                 setInfo(curIndex);
@@ -249,14 +251,14 @@ $.fn.extend({
 
             //按钮激活
             if (option.hookbtn) {
-                $(option.hookbtn).click(function() {
+                $(option.hookbtn).click(function () {
                     $(ele).find("li").eq(0).click();
                 });
 
             }
 
             //关闭
-            $win.find(".byviewer-close").click(function() {
+            $win.find(".byviewer-close").click(function () {
                 $win.hide();
             });
         });
